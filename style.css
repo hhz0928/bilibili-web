@@ -1,0 +1,505 @@
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* 顶部导航栏样式 */
+.header {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 30px;
+    margin-right: 30px;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.main-nav li {
+    margin-right: 20px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+    background-color: #e8f4f8;
+    color: #00a1d6;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.search-box {
+    display: flex;
+    margin-right: 20px;
+}
+
+.search-box input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    width: 200px;
+    outline: none;
+}
+
+.search-btn {
+    background-color: #00a1d6;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-btn:hover {
+    background-color: #0087b3;
+}
+
+.user-actions button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn {
+    background-color: #fff;
+    color: #00a1d6;
+    border: 1px solid #00a1d6;
+}
+
+.login-btn:hover {
+    background-color: #e8f4f8;
+}
+
+.register-btn {
+    background-color: #00a1d6;
+    color: white;
+    border: none;
+}
+
+.register-btn:hover {
+    background-color: #0087b3;
+}
+
+/* 主体内容区域布局 */
+.main-container {
+    display: flex;
+    margin-top: 60px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
+/* 左侧分类侧边栏 */
+.sidebar {
+    width: 160px;
+    background-color: #f4f5f7;
+    border-radius: 8px;
+    padding: 20px 0;
+    margin-right: 20px;
+    height: calc(100vh - 100px);
+    position: sticky;
+    top: 80px;
+    overflow-y: auto;
+}
+
+.sidebar-toggle {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    padding: 0;
+}
+
+.sidebar-menu a {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background-color: #e8f4f8;
+    color: #00a1d6;
+    border-right: 3px solid #00a1d6;
+}
+
+/* 中间内容区域 */
+.content {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.content-header h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.video-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s forwards;
+}
+
+.video-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail img {
+    transform: scale(1.05);
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+.video-info {
+    padding: 10px;
+}
+
+.video-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.video-desc {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.video-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+}
+
+.video-stats span {
+    display: flex;
+    align-items: center;
+}
+
+.video-stats i {
+    margin-right: 3px;
+}
+
+/* 右侧推荐栏 */
+.recommend {
+    width: 260px;
+}
+
+.recommend-section {
+    background-color: #f4f5f7;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.recommend-section h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #333;
+    border-bottom: 1px solid #e5e9ef;
+    padding-bottom: 10px;
+}
+
+.rank-list {
+    list-style: none;
+}
+
+.rank-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #e5e9ef;
+}
+
+.rank-list li:last-child {
+    border-bottom: none;
+}
+
+.rank-list a {
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+    transition: color 0.3s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.rank-list a:hover {
+    color: #00a1d6;
+}
+
+.live-list {
+    list-style: none;
+}
+
+.live-item {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.live-item img {
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+}
+
+.live-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: #ff6699;
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.live-info {
+    margin-top: 5px;
+}
+
+.live-info p {
+    font-size: 13px;
+    margin-bottom: 5px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.viewer-count {
+    font-size: 12px;
+    color: #999;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .main-container {
+        padding: 15px;
+    }
+    
+    .sidebar {
+        width: 140px;
+    }
+    
+    .recommend {
+        width: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .main-nav li {
+        margin-right: 10px;
+    }
+    
+    .search-box input {
+        width: 150px;
+    }
+    
+    .sidebar {
+        width: 120px;
+    }
+    
+    .sidebar-menu a {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+    
+    .recommend {
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-right .search-box {
+        display: none;
+    }
+    
+    .sidebar {
+        position: fixed;
+        left: -200px;
+        top: 60px;
+        height: calc(100vh - 60px);
+        z-index: 999;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.active {
+        left: 0;
+    }
+    
+    .sidebar-toggle {
+        display: block;
+        position: fixed;
+        left: 10px;
+        top: 70px;
+        z-index: 1000;
+        background: #fff;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .main-container {
+        padding: 10px;
+    }
+    
+    .content {
+        margin-right: 0;
+    }
+    
+    .recommend {
+        display: none;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .logo img {
+        margin-right: 15px;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+    
+    .video-thumbnail {
+        height: 100px;
+    }
+    
+    .sidebar {
+        width: 160px;
+    }
+}

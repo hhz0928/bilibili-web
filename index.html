@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B站风格页面（完整卡片版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        :root {
+            --light-blue: #E8F4F8;
+            --main-blue: #00A1D6;
+            --dark-blue: #0086B3;
+            --gray: #F2F2F2;
+            --text-color: #333;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: row;
+            min-height: 100vh;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            width: 200px;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            transition: width 0.3s ease;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .sidebar .logo {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--main-blue);
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .sidebar .menu {
+            list-style: none;
+        }
+
+        .sidebar .menu li {
+            padding: 14px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar .menu li:hover {
+            background-color: var(--light-blue);
+        }
+
+        .sidebar .menu li i {
+            font-size: 18px;
+            color: var(--main-blue);
+            margin-right: 12px;
+        }
+
+        /* 主内容区 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部导航 */
+        .header {
+            height: 60px;
+            background-color: white;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 5;
+        }
+
+        .header .search-box {
+            width: 400px;
+            position: relative;
+        }
+
+        .header .search-box input {
+            width: 100%;
+            height: 36px;
+            border-radius: 18px;
+            border: 1px solid #ddd;
+            padding: 0 15px 0 35px;
+            outline: none;
+        }
+
+        .header .search-box input:focus {
+            border-color: var(--main-blue);
+        }
+
+        .header .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .header .user-btn {
+            background-color: var(--main-blue);
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* 内容区 */
+        .content {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        /* 视频卡片列表 */
+        .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .video-card {
+            background-color: white;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .video-card .cover {
+            width: 100%;
+            height: 140px;
+            background-color: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--main-blue);
+            font-size: 14px;
+        }
+
+        .video-card .info {
+            padding: 12px;
+        }
+
+        .video-card .title {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-card .stats {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 弹窗 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            width: 80%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 15px 20px;
+            background-color: white;
+            border-bottom: 1px solid var(--gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-body {
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .modal-body .video-player {
+            flex: 0 1 600px;
+            height: 340px;
+            background-color: var(--light-blue);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--main-blue);
+        }
+
+        .modal-body .video-info {
+            flex: 1;
+        }
+
+        .modal-body .video-info h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body .video-info p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-body .video-info .stats {
+            font-size: 14px;
+            color: #999;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 侧边栏 -->
+    <div class="sidebar">
+        <div class="logo">B站风格</div>
+        <ul class="menu">
+            <li><i class="fas fa-home"></i><span>首页</span></li>
+            <li><i class="fas fa-video"></i><span>动画</span></li>
+            <li><i class="fas fa-gamepad"></i><span>游戏</span></li>
+            <li><i class="fas fa-music"></i><span>音乐</span></li>
+            <li><i class="fas fa-utensils"></i><span>美食</span></li>
+            <li><i class="fas fa-book"></i><span>知识</span></li>
+        </ul>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <!-- 顶部导航 -->
+        <div class="header">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="搜索你感兴趣的内容...">
+            </div>
+            <div>
+                <button class="user-btn">登录</button>
+                <button class="user-btn">注册</button>
+            </div>
+        </div>
+
+        <!-- 内容区 -->
+        <div class="content">
+            <h2 class="section-title">推荐视频</h2>
+            <div class="video-list">
+                <!-- 视频卡片1 -->
+                <div class="video-card" data-title="【美食教程】超简单的番茄炒蛋做法" data-desc="详细讲解番茄炒蛋的家常做法，新手也能学会！" data-play="12.3万" data-like="5680">
+                    <div class="cover">视频封面</div>
+                    <div class="info">
+                        <div class="title">【美食教程】超简单的番茄炒蛋做法</div>
+                        <div class="stats">12.3万播放 · 5680赞</div>
+                    </div>
+                </div>
+
+                <!-- 视频卡片2 -->
+                <div class="video-card" data-title="B站热门动画混剪：那些燃到爆的瞬间" data-desc="盘点B站高燃动画片段，每一帧都是视觉盛宴！" data-play="89.6万" data-like="3.2万">
+                    <div class="cover">视频封面</div>
+                    <div class="info">
+                        <div class="title">B站热门动画混剪：那些燃到爆的瞬间</div>
+                        <div class="stats">89.6万播放 · 3.2万赞</div>
+                    </div>
+                </div>
+
+                <!-- 视频卡片3 -->
+                <div class="video-card" data-title="游戏攻略：原神须弥隐藏任务全解析" data-desc="手把手教你完成须弥所有隐藏任务，拿满奖励！" data-play="45.2万" data-like="1.8万">
+                    <div class="cover">视频封面</div>
+                    <div class="info">
+                        <div class="title">游戏攻略：原神须弥隐藏任务全解析</div>
+                        <div class="stats">45.2万播放 · 1.8万赞</div>
+                    </div>
+                </div>
+
+                <!-- 视频卡片4 -->
+                <div class="video-card" data-title="治愈系音乐：适合学习工作的轻音乐合集" data-desc="精选10首治愈系轻音乐，帮你放松身心、提升效率！" data-play="67.8万" data-like="2.5万">
+                    <div class="cover">视频封面</div>
+                    <div class="info">
+                        <div class="title">治愈系音乐：适合学习工作的轻音乐合集</div>
+                        <div class="stats">67.8万播放 · 2.5万赞</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>视频详情</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="video-player">视频播放区</div>
+                <div class="video-info">
+                    <h2 id="modalTitle">视频标题</h2>
+                    <p id="modalDesc">视频描述内容...</p>
+                    <div class="stats" id="modalStats">
+                        <p>播放量：10万+ · 点赞数：5000+</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 弹窗逻辑
+        const videoCards = document.querySelectorAll('.video-card');
+        const videoModal = document.getElementById('videoModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalStats = document.getElementById('modalStats');
+
+        // 打开弹窗
+        videoCards.forEach(card => {
+            card.addEventListener('click', () => {
+                modalTitle.textContent = card.dataset.title;
+                modalDesc.textContent = card.dataset.desc;
+                modalStats.innerHTML = `<p>播放量：${card.dataset.play} · 点赞数：${card.dataset.like}</p>`;
+                videoModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // 关闭弹窗
+        closeModal.addEventListener('click', () => {
+            videoModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        });
+
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
