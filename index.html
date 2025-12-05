@@ -1255,73 +1255,93 @@
         const registerForm = document.getElementById('registerForm');
 
         // 打开登录弹窗
-        loginBtn.addEventListener('click', () => {
-            loginModal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        });
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        }
 
         // 打开注册弹窗
-        registerBtn.addEventListener('click', () => {
-            registerModal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        });
+        if (registerBtn) {
+            registerBtn.addEventListener('click', () => {
+                registerModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        }
 
         // 关闭登录弹窗
-        closeLoginModal.addEventListener('click', () => {
-            loginModal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-            loginForm.reset();
-            clearErrors();
-        });
+        if (closeLoginModal) {
+            closeLoginModal.addEventListener('click', () => {
+                if (loginModal) {
+                    loginModal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                    if (loginForm) loginForm.reset();
+                    clearErrors();
+                }
+            });
+        }
 
         // 关闭注册弹窗
-        closeRegisterModal.addEventListener('click', () => {
-            registerModal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-            registerForm.reset();
-            clearErrors();
-        });
+        if (closeRegisterModal) {
+            closeRegisterModal.addEventListener('click', () => {
+                if (registerModal) {
+                    registerModal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                    if (registerForm) registerForm.reset();
+                    clearErrors();
+                }
+            });
+        }
 
         // 点击弹窗背景关闭
-        loginModal.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                loginModal.classList.remove('show');
-                document.body.style.overflow = 'auto';
-                loginForm.reset();
-                clearErrors();
-            }
-        });
+        if (loginModal) {
+            loginModal.addEventListener('click', (e) => {
+                if (e.target === loginModal) {
+                    loginModal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                    if (loginForm) loginForm.reset();
+                    clearErrors();
+                }
+            });
+        }
 
-        registerModal.addEventListener('click', (e) => {
-            if (e.target === registerModal) {
-                registerModal.classList.remove('show');
-                document.body.style.overflow = 'auto';
-                registerForm.reset();
-                clearErrors();
-            }
-        });
+        if (registerModal) {
+            registerModal.addEventListener('click', (e) => {
+                if (e.target === registerModal) {
+                    registerModal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                    if (registerForm) registerForm.reset();
+                    clearErrors();
+                }
+            });
+        }
 
         // 切换到注册
-        switchToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            loginModal.classList.remove('show');
-            loginForm.reset();
-            clearErrors();
-            setTimeout(() => {
-                registerModal.classList.add('show');
-            }, 100);
-        });
+        if (switchToRegister) {
+            switchToRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (loginModal) loginModal.classList.remove('show');
+                if (loginForm) loginForm.reset();
+                clearErrors();
+                setTimeout(() => {
+                    if (registerModal) registerModal.classList.add('show');
+                }, 100);
+            });
+        }
 
         // 切换到登录
-        switchToLogin.addEventListener('click', (e) => {
-            e.preventDefault();
-            registerModal.classList.remove('show');
-            registerForm.reset();
-            clearErrors();
-            setTimeout(() => {
-                loginModal.classList.add('show');
-            }, 100);
-        });
+        if (switchToLogin) {
+            switchToLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (registerModal) registerModal.classList.remove('show');
+                if (registerForm) registerForm.reset();
+                clearErrors();
+                setTimeout(() => {
+                    if (loginModal) loginModal.classList.add('show');
+                }, 100);
+            });
+        }
 
         // 清除所有错误显示
         function clearErrors() {
