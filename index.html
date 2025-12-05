@@ -134,19 +134,20 @@
         }
         .hero-bg-layer img.hero-bg-img{
             position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 120%;
-            height: 120%;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            transform: translate3d(-50%,-50%,0);
-            transition: transform 420ms cubic-bezier(.2,.8,.2,1);
-            will-change: transform;
+            transform: translate3d(0,0,0);
+            transition: transform 420ms cubic-bezier(.2,.8,.2,1), opacity 200ms ease;
+            will-change: transform, opacity;
             pointer-events: none;
             user-select: none;
             opacity: 1 !important;
             display: block !important;
             z-index: 1;
+            visibility: visible !important;
         }
         .hero-banner > * { position: relative; z-index: 3; }
 
