@@ -136,6 +136,9 @@
             will-change: transform;
             pointer-events: none;
             user-select: none;
+            opacity: 1 !important;
+            display: block !important;
+            outline: 2px solid rgba(0,0,0,0.0);
         }
         .hero-banner > * { position: relative; z-index: 1; }
 
@@ -1433,12 +1436,21 @@
             // Ensure image src uses absolute origin so Live Server path issues are avoided
             try{
                 const expected = window.location.origin + '/photo/beijing.webp';
+                const fallback = './photo/beijing.webp';
                 if (img) {
-                    if (img.src.indexOf('photo/beijing.webp') === -1) img.src = expected;
-                    img.addEventListener('load', ()=>{ console.log('hero-bg-img loaded:', img.src, img.naturalWidth, img.naturalHeight); });
-                    img.addEventListener('error', (ev)=>{ console.error('hero-bg-img failed to load:', img.src, ev); layer.style.backgroundImage = `url('${expected}')`; });
+                    if (!img.src || img.src.indexOf('photo/beijing.webp') === -1) img.src = expected;
+                    img.addEventListener('load', ()=>{ console.log('hero-bg-img loaded:', img.src, 'complete:', img.complete, 'naturalWidth:', img.naturalWidth, 'naturalHeight:', img.naturalHeight); img.style.visibility='visible'; });
+                    img.addEventListener('error', (ev)=>{ console.error('hero-bg-img failed to load:', img.src, ev); img.src = fallback; layer.style.backgroundImage = `url('${fallback}')`; });
+                    // defensive: if image not loaded after a short delay, try fallback relative path
+                    setTimeout(()=>{
+                        if (img && !img.complete) {
+                            console.warn('hero-bg-img not complete, switching to fallback:', fallback);
+                            img.src = fallback;
+                        }
+                        if (img) console.log('hero-bg current src:', img.src, 'complete=', img.complete);
+                    }, 600);
                 } else {
-                    layer.style.backgroundImage = `url('${window.location.origin + '/photo/beijing.webp'}')`;
+                    layer.style.backgroundImage = `url('${expected}')`;
                 }
             } catch (err){ console.warn('hero-bg init error', err); }
 
