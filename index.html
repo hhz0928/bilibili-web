@@ -81,17 +81,18 @@
 
         /* 顶部导航 */
         .header {
-            height: 60px;
-            background-color: white;
-            padding: 0 20px;
-            display: flex;
+            height: 0;
+            background-color: transparent;
+            padding: 0;
+            display: none;
             align-items: center;
             justify-content: flex-start;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: none;
             z-index: 5;
         }
 
         .header .logo {
+            display: none;
             font-size: 18px;
             font-weight: bold;
             color: var(--main-blue);
@@ -100,29 +101,24 @@
         /* 背景图像区域 */
         .hero-banner {
             width: 100%;
-            height: 160px;
-            background: none;
+            height: 280px;
+            background-image: url('photo/beijing.webp');
+            background-size: cover;
+            background-position: center center;
             background-attachment: scroll;
-            overflow: hidden;
+            overflow: visible;
             position: relative;
-            transition: all 0.3s ease;
+            transition: background-position 300ms ease, all 0.3s ease;
             margin-top: 0;
             display: flex;
-            flex-direction: row;
-            align-items: flex-end;
-            justify-content: space-between;
-            padding: 0 40px 16px 40px;
-            gap: 20px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0;
+            gap: 10px;
         }
         .hero-bg-layer {
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            transform: translate3d(0,0,0);
-            transition: transform 420ms cubic-bezier(.2,.8,.2,1);
-            will-change: transform;
-            pointer-events: none;
+            display: none; /* hide img layer; using banner background instead for reliability */
         }
         .hero-bg-layer::after{
             content: '';
@@ -149,12 +145,23 @@
             z-index: 1;
             visibility: visible !important;
         }
+        .hero-banner .logo-img {
+            position: absolute;
+            left: 30px;
+            top: 30px;
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            z-index: 3;
+        }
         .hero-banner > * { position: relative; z-index: 3; }
 
         .hero-banner .search-box {
-            width: 400px;
+            width: 500px;
             position: relative;
             flex-shrink: 0;
+            margin-top: 120px;
+            z-index: 10;
         }
 
         .hero-banner .search-box input {
@@ -194,7 +201,7 @@
         }
 
         .hero-banner .button-group {
-            display: flex;
+            display: none;
             gap: 12px;
             flex-shrink: 0;
             align-self: flex-end;
@@ -916,7 +923,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="photo/pexels-nicole-seidl-35046781.jpg" />
+    <link rel="icon" href="photo/Logo.png" />
 </head>
 <body>
     <!-- 主内容区 -->
@@ -929,13 +936,10 @@
         <!-- 背景图像区域 -->
         <div class="hero-banner">
             <div class="hero-bg-layer" aria-hidden="true"><img class="hero-bg-img" src="photo/beijing.webp" alt=""/></div>
+            <img class="logo-img" src="photo/Logo.png" alt="小娱视频 Logo"/>
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="搜索你感兴趣的内容...">
-            </div>
-            <div class="button-group">
-                <button class="user-btn">登录</button>
-                <button class="user-btn">注册</button>
             </div>
         </div>
 
@@ -1488,4 +1492,4 @@
         })();
     </script>
 </body>
-</html>
+</html> 
