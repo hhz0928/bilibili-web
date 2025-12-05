@@ -118,13 +118,24 @@
             position: absolute;
             inset: 0;
             z-index: 0;
-            background-image: url('photo/beijing.webp');
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
             transform: translate3d(0,0,0);
             transition: transform 420ms cubic-bezier(.2,.8,.2,1);
             will-change: transform;
             pointer-events: none;
+        }
+        .hero-bg-layer img.hero-bg-img{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            transform: translate3d(-50%,-50%,0);
+            transition: transform 420ms cubic-bezier(.2,.8,.2,1);
+            will-change: transform;
+            pointer-events: none;
+            user-select: none;
         }
         .hero-banner > * { position: relative; z-index: 1; }
 
@@ -893,6 +904,7 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="photo/pexels-nicole-seidl-35046781.jpg" />
 </head>
 <body>
     <!-- 主内容区 -->
@@ -904,7 +916,7 @@
 
         <!-- 背景图像区域 -->
         <div class="hero-banner">
-            <div class="hero-bg-layer" aria-hidden="true"></div>
+            <div class="hero-bg-layer" aria-hidden="true"><img class="hero-bg-img" src="photo/beijing.webp" alt=""/></div>
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="搜索你感兴趣的内容...">
