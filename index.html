@@ -1427,7 +1427,21 @@
         (function(){
             const banner = document.querySelector('.hero-banner');
             const layer = document.querySelector('.hero-bg-layer');
+            const img = layer ? layer.querySelector('.hero-bg-img') : null;
             if (!banner || !layer) return;
+
+            // Ensure image src uses absolute origin so Live Server path issues are avoided
+            try{
+                const expected = window.location.origin + '/photo/beijing.webp';
+                if (img) {
+                    if (img.src.indexOf('photo/beijing.webp') === -1) img.src = expected;
+                    img.addEventListener('load', ()=>{ console.log('hero-bg-img loaded:', img.src, img.naturalWidth, img.naturalHeight); });
+                    img.addEventListener('error', (ev)=>{ console.error('hero-bg-img failed to load:', img.src, ev); layer.style.backgroundImage = `url('${expected}')`; });
+                } else {
+                    layer.style.backgroundImage = `url('${window.location.origin + '/photo/beijing.webp'}')`;
+                }
+            } catch (err){ console.warn('hero-bg init error', err); }
+
             const strength = 48; // max translate px
             let raf = null;
             function handleMove(e){
