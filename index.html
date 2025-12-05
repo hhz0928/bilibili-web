@@ -1437,10 +1437,14 @@
         });
         // === Hero banner mouse-follow background parallax ===
         (function(){
+            console.log('hero parallax script start');
             const banner = document.querySelector('.hero-banner');
             const layer = document.querySelector('.hero-bg-layer');
             const img = layer ? layer.querySelector('.hero-bg-img') : null;
-            if (!banner || !layer) return;
+            if (!banner || !layer) {
+                console.warn('hero parallax: missing elements', {banner: !!banner, layer: !!layer, img: !!img});
+                return;
+            }
 
             // Ensure image src uses absolute origin so Live Server path issues are avoided
             try{
