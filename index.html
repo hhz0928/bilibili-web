@@ -86,44 +86,70 @@
             padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             z-index: 5;
         }
 
-        .header .search-box {
-            width: 400px;
-            position: relative;
+        .header .logo {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--main-blue);
         }
 
-        .header .search-box input {
+        /* 背景图像区域 */
+        .hero-banner {
             width: 100%;
-            height: 36px;
-            border-radius: 18px;
+            height: 160px;
+            background: linear-gradient(135deg, rgba(0, 161, 214, 0.15), rgba(0, 134, 179, 0.12)),
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280"><defs><linearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" style="stop-color:%2300A1D6;stop-opacity:0.08" /><stop offset="50%25" style="stop-color:%230086B3;stop-opacity:0.06" /><stop offset="100%25" style="stop-color:%23E8F4F8;stop-opacity:0.08" /></linearGradient></defs><rect width="1200" height="280" fill="url(%23grad)"/><circle cx="150" cy="60" r="80" fill="%2300A1D6" opacity="0.08"/><circle cx="1050" cy="220" r="120" fill="%230086B3" opacity="0.06"/><path d="M0 140 Q300 80 600 120 T1200 140 L1200 280 L0 280 Z" fill="%23E8F4F8" opacity="0.05"/></svg>') center/cover no-repeat;
+            background-attachment: scroll;
+            position: relative;
+            transition: all 0.3s ease;
+            margin-top: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 0 40px 16px 40px;
+            gap: 20px;
+        }
+
+        .hero-banner .search-box {
+            width: 400px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .hero-banner .search-box input {
+            width: 100%;
+            height: 40px;
+            border-radius: 20px;
             border: 1px solid #ddd;
             padding: 0 15px 0 35px;
             outline: none;
-            background-color: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.98);
             transition: all 0.3s ease;
             font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .header .search-box input:hover {
+        .hero-banner .search-box input:hover {
             background-color: white;
-            box-shadow: 0 4px 12px rgba(0, 161, 214, 0.15);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
 
-        .header .search-box input:focus {
+        .hero-banner .search-box input:focus {
             border-color: var(--main-blue);
             background-color: white;
-            box-shadow: 0 6px 16px rgba(0, 161, 214, 0.2);
+            box-shadow: 0 8px 20px rgba(0, 161, 214, 0.25);
         }
 
-        .header .search-box input::placeholder {
+        .hero-banner .search-box input::placeholder {
             color: #999;
         }
 
-        .header .search-box i {
+        .hero-banner .search-box i {
             position: absolute;
             left: 12px;
             top: 50%;
@@ -131,58 +157,91 @@
             color: #999;
         }
 
-        .header .user-btn {
+        .hero-banner .button-group {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            align-self: flex-end;
+        }
+
+        .hero-banner .user-btn {
             background-color: var(--main-blue);
             color: white;
             border: none;
-            padding: 8px 18px;
+            padding: 10px 24px;
             border-radius: 4px;
             cursor: pointer;
-            margin-left: 10px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s cubic-bezier(0.2, 0.9, 0.2, 1);
-            box-shadow: 0 2px 8px rgba(0, 161, 214, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 161, 214, 0.2);
+            white-space: nowrap;
         }
 
-        .header .user-btn:hover {
+        .hero-banner .user-btn:hover {
             background-color: var(--dark-blue);
-            box-shadow: 0 4px 12px rgba(0, 161, 214, 0.25);
-            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 161, 214, 0.3);
+            transform: translateY(-3px);
         }
 
-        .header .user-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 6px rgba(0, 161, 214, 0.15);
-        }
-
-        /* 背景图像区域 */
-        .hero-banner {
-            width: 100%;
-            height: 280px;
-            background: linear-gradient(135deg, rgba(0, 161, 214, 0.15), rgba(0, 134, 179, 0.12)),
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280"><defs><linearGradient id="grad" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" style="stop-color:%2300A1D6;stop-opacity:0.08" /><stop offset="50%25" style="stop-color:%230086B3;stop-opacity:0.06" /><stop offset="100%25" style="stop-color:%23E8F4F8;stop-opacity:0.08" /></linearGradient></defs><rect width="1200" height="280" fill="url(%23grad)"/><circle cx="150" cy="60" r="80" fill="%2300A1D6" opacity="0.08"/><circle cx="1050" cy="220" r="120" fill="%230086B3" opacity="0.06"/><path d="M0 140 Q300 80 600 120 T1200 140 L1200 280 L0 280 Z" fill="%23E8F4F8" opacity="0.05"/></svg>') center/cover no-repeat;
-            background-attachment: scroll;
-            position: relative;
-            transition: all 0.3s ease;
-            margin-top: 0;
+        .hero-banner .user-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 161, 214, 0.2);
         }
 
         @media (max-width: 1024px) {
             .hero-banner {
-                height: 220px;
+                height: 140px;
+                gap: 16px;
+                padding: 0 30px 14px 30px;
+            }
+
+            .hero-banner .search-box {
+                width: 300px;
             }
         }
 
         @media (max-width: 768px) {
             .hero-banner {
-                height: 180px;
+                height: auto;
+                gap: 12px;
+                padding: 16px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero-banner .search-box {
+                width: 100%;
+            }
+
+            .hero-banner .button-group {
+                flex-wrap: wrap;
+                justify-content: center;
+                align-self: auto;
+            }
+
+            .hero-banner .user-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+                flex: 1;
+                min-width: 100px;
             }
         }
 
         @media (max-width: 480px) {
             .hero-banner {
-                height: 140px;
+                gap: 10px;
+                padding: 12px;
+            }
+
+            .hero-banner .search-box input {
+                height: 36px;
+                font-size: 13px;
+            }
+
+            .hero-banner .user-btn {
+                padding: 6px 12px;
+                font-size: 12px;
             }
         }
 
@@ -299,12 +358,150 @@
         .video-card .cover {
             width: 100%;
             height: 140px;
-            background-color: var(--light-blue);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: cover;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--main-blue);
+            color: white;
             font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-card .cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.25) 100%);
+            z-index: 1;
+        }
+
+        .video-card:nth-child(1) .cover {
+            background-image: url('photo/pexels-aymane-hanni-2148955127-30365876.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .video-card:nth-child(1) .cover::before {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        .video-card:nth-child(2) .cover {
+            background-image: url('photo/pexels-gabin-cobret-430175667-34097368.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .video-card:nth-child(2) .cover::before {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
+        }
+
+        .video-card:nth-child(3) .cover {
+            background-image: url('photo/pexels-jean-paul-wettstein-677916508-34198331.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .video-card:nth-child(3) .cover::before {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.3) 100%);
+        }
+
+        .video-card:nth-child(4) .cover {
+            background-image: url('photo/pexels-majesticaljasmin-17392872.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .video-card:nth-child(4) .cover::before {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.25) 100%);
+        }
+
+        .video-card .cover-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .video-card .cover-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-card .cover-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-card .cover-duration {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 10px;
+        }
+
+        /* 悬浮时的播放效果 */
+        .video-card .cover-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            z-index: 3;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.2, 1);
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .video-card .cover-play-btn::after {
+            content: '\25B6';
+            margin-left: 4px;
+        }
+
+        .video-card:hover .cover-play-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .video-card:hover .cover::before {
+            animation: playPulse 0.6s ease-out infinite;
+        }
+
+        @keyframes playPulse {
+            0% { opacity: 0.85; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.85; }
         }
 
         .video-card .info {
@@ -383,6 +580,7 @@
             padding: 20px;
             display: flex;
             gap: 20px;
+            max-height: 500px;
         }
 
         .modal-body .video-player {
@@ -394,27 +592,112 @@
             align-items: center;
             justify-content: center;
             color: var(--main-blue);
+            font-size: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-body .video-player::after {
+            content: '▶';
+            font-size: 60px;
+            opacity: 0.4;
         }
 
         .modal-body .video-info {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .modal-body .video-info h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
+            font-size: 18px;
+            margin: 0;
+            color: var(--text-color);
         }
 
         .modal-body .video-info p {
-            font-size: 14px;
-            line-height: 1.6;
+            font-size: 13px;
+            line-height: 1.5;
             color: #666;
-            margin-bottom: 20px;
+            margin: 0;
         }
 
         .modal-body .video-info .stats {
-            font-size: 14px;
+            font-size: 13px;
             color: #999;
+            margin: 0;
+        }
+
+        /* 播放列表容器 */
+        .modal-body .playlist-section {
+            flex: 0 1 280px;
+            border-left: 1px solid var(--gray);
+            padding-left: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            max-height: 340px;
+        }
+
+        .modal-body .playlist-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .modal-body .playlist-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-body .playlist-item {
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+            color: #666;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .modal-body .playlist-item:hover {
+            background-color: var(--light-blue);
+            color: var(--main-blue);
+        }
+
+        .modal-body .playlist-item.active {
+            background-color: var(--light-blue);
+            color: var(--main-blue);
+            font-weight: 600;
+            border-left: 3px solid var(--main-blue);
+        }
+
+        .modal-body .playlist-item-number {
+            flex-shrink: 0;
+            width: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .modal-body .playlist-item-text {
+            flex: 1;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* 登录/注册弹窗 */
@@ -603,18 +886,20 @@
     <div class="main-content">
         <!-- 顶部导航 -->
         <div class="header">
+            <div class="logo">B站风格</div>
+        </div>
+
+        <!-- 背景图像区域 -->
+        <div class="hero-banner">
             <div class="search-box">
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="搜索你感兴趣的内容...">
             </div>
-            <div>
+            <div class="button-group">
                 <button class="user-btn">登录</button>
                 <button class="user-btn">注册</button>
             </div>
         </div>
-
-        <!-- 背景图像区域 -->
-        <div class="hero-banner"></div>
 
         <!-- 顶部标签导航 -->
         <div class="tabs-container">
@@ -638,7 +923,16 @@
             <div class="video-list">
                 <!-- 视频卡片1 -->
                 <div class="video-card" data-title="【美食教程】超简单的番茄炒蛋做法" data-desc="详细讲解番茄炒蛋的家常做法，新手也能学会！" data-play="12.3万" data-like="5680">
-                    <div class="cover">视频封面</div>
+                    <div class="cover">
+                        <div class="cover-play-btn"></div>
+                        <div class="cover-content">
+                            <div class="cover-title">【美食教程】超简单的番茄炒蛋做法</div>
+                            <div class="cover-stats">
+                                <span>▶ 12.3万</span>
+                                <span class="cover-duration">30:45</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="info">
                         <div class="title">【美食教程】超简单的番茄炒蛋做法</div>
                         <div class="stats">12.3万播放 · 5680赞</div>
@@ -647,7 +941,16 @@
 
                 <!-- 视频卡片2 -->
                 <div class="video-card" data-title="B站热门动画混剪：那些燃到爆的瞬间" data-desc="盘点B站高燃动画片段，每一帧都是视觉盛宴！" data-play="89.6万" data-like="3.2万">
-                    <div class="cover">视频封面</div>
+                    <div class="cover">
+                        <div class="cover-play-btn"></div>
+                        <div class="cover-content">
+                            <div class="cover-title">B站热门动画混剪：那些燃到爆的瞬间</div>
+                            <div class="cover-stats">
+                                <span>▶ 89.6万</span>
+                                <span class="cover-duration">29:49</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="info">
                         <div class="title">B站热门动画混剪：那些燃到爆的瞬间</div>
                         <div class="stats">89.6万播放 · 3.2万赞</div>
@@ -656,7 +959,16 @@
 
                 <!-- 视频卡片3 -->
                 <div class="video-card" data-title="游戏攻略：原神须弥隐藏任务全解析" data-desc="手把手教你完成须弥所有隐藏任务，拿满奖励！" data-play="45.2万" data-like="1.8万">
-                    <div class="cover">视频封面</div>
+                    <div class="cover">
+                        <div class="cover-play-btn"></div>
+                        <div class="cover-content">
+                            <div class="cover-title">游戏攻略：原神须弥隐藏任务全解析</div>
+                            <div class="cover-stats">
+                                <span>▶ 45.2万</span>
+                                <span class="cover-duration">34:44</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="info">
                         <div class="title">游戏攻略：原神须弥隐藏任务全解析</div>
                         <div class="stats">45.2万播放 · 1.8万赞</div>
@@ -665,7 +977,16 @@
 
                 <!-- 视频卡片4 -->
                 <div class="video-card" data-title="治愈系音乐：适合学习工作的轻音乐合集" data-desc="精选10首治愈系轻音乐，帮你放松身心、提升效率！" data-play="67.8万" data-like="2.5万">
-                    <div class="cover">视频封面</div>
+                    <div class="cover">
+                        <div class="cover-play-btn"></div>
+                        <div class="cover-content">
+                            <div class="cover-title">治愈系音乐：适合学习工作的轻音乐合集</div>
+                            <div class="cover-stats">
+                                <span>▶ 67.8万</span>
+                                <span class="cover-duration">12:42</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="info">
                         <div class="title">治愈系音乐：适合学习工作的轻音乐合集</div>
                         <div class="stats">67.8万播放 · 2.5万赞</div>
@@ -679,17 +1000,38 @@
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>视频详情</h3>
+                <h3>视频播放</h3>
                 <button class="close-btn" id="closeModal">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="video-player">视频播放区</div>
+                <div class="video-player"></div>
                 <div class="video-info">
                     <h2 id="modalTitle">视频标题</h2>
                     <p id="modalDesc">视频描述内容...</p>
                     <div class="stats" id="modalStats">
                         <p>播放量：10万+ · 点赞数：5000+</p>
                     </div>
+                </div>
+                <div class="playlist-section">
+                    <h4 class="playlist-title">播放列表</h4>
+                    <ul class="playlist-items" id="playlistItems">
+                        <li class="playlist-item active" data-index="0">
+                            <span class="playlist-item-number">1</span>
+                            <span class="playlist-item-text">【美食教程】超简单的番茄炒蛋做法</span>
+                        </li>
+                        <li class="playlist-item" data-index="1">
+                            <span class="playlist-item-number">2</span>
+                            <span class="playlist-item-text">B站热门动画混剪：那些燃到爆的瞬间</span>
+                        </li>
+                        <li class="playlist-item" data-index="2">
+                            <span class="playlist-item-number">3</span>
+                            <span class="playlist-item-text">游戏攻略：原神须弥隐藏任务全解析</span>
+                        </li>
+                        <li class="playlist-item" data-index="3">
+                            <span class="playlist-item-number">4</span>
+                            <span class="playlist-item-text">治愈系音乐：适合学习工作的轻音乐合集</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -772,14 +1114,12 @@
         const modalDesc = document.getElementById('modalDesc');
         const modalStats = document.getElementById('modalStats');
 
-        // 打开弹窗
-        videoCards.forEach(card => {
+        // 点击视频卡片：跳转到独立播放页（video.html）
+        videoCards.forEach((card, idx) => {
+            card.dataset.index = idx;
             card.addEventListener('click', () => {
-                modalTitle.textContent = card.dataset.title;
-                modalDesc.textContent = card.dataset.desc;
-                modalStats.innerHTML = `<p>播放量：${card.dataset.play} · 点赞数：${card.dataset.like}</p>`;
-                videoModal.classList.add('show');
-                document.body.style.overflow = 'hidden';
+                // 跳转到播放页面并传递索引
+                window.location.href = `video.html?index=${idx}`;
             });
         });
 
@@ -794,6 +1134,31 @@
                 videoModal.classList.remove('show');
                 document.body.style.overflow = 'auto';
             }
+        });
+
+        // === 播放列表交互 ===
+        const playlistItems = document.querySelectorAll('.playlist-item');
+        const videosData = [
+            { title: '【美食教程】超简单的番茄炒蛋做法', desc: '详细讲解番茄炒蛋的家常做法，新手也能学会！', play: '12.3万', like: '5680' },
+            { title: 'B站热门动画混剪：那些燃到爆的瞬间', desc: '盘点B站高燃动画片段，每一帧都是视觉盛宴！', play: '89.6万', like: '3.2万' },
+            { title: '游戏攻略：原神须弥隐藏任务全解析', desc: '手把手教你完成须弥所有隐藏任务，拿满奖励！', play: '45.2万', like: '1.8万' },
+            { title: '治愈系音乐：适合学习工作的轻音乐合集', desc: '精选10首治愈系轻音乐，帮你放松身心、提升效率！', play: '67.8万', like: '2.5万' }
+        ];
+
+        playlistItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const index = parseInt(item.dataset.index);
+                const video = videosData[index];
+                
+                // 更新播放器信息
+                modalTitle.textContent = video.title;
+                modalDesc.textContent = video.desc;
+                modalStats.innerHTML = `<p>播放量：${video.play} · 点赞数：${video.like}</p>`;
+                
+                // 更新播放列表选中状态
+                playlistItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
         });
 
         // === 顶部 tab 交互逻辑 ===
@@ -834,8 +1199,8 @@
         });
 
         // === 登录/注册弹窗交互逻辑 ===
-        const loginBtn = document.querySelectorAll('.user-btn')[0]; // 登录按钮
-        const registerBtn = document.querySelectorAll('.user-btn')[1]; // 注册按钮
+        const loginBtn = document.querySelectorAll('.hero-banner .user-btn')[0]; // 登录按钮
+        const registerBtn = document.querySelectorAll('.hero-banner .user-btn')[1]; // 注册按钮
         const loginModal = document.getElementById('loginModal');
         const registerModal = document.getElementById('registerModal');
         const closeLoginModal = document.getElementById('closeLoginModal');

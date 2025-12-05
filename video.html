@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>播放 - 示例</title>
+    <style>
+        :root{--main-blue:#00A1D6;--light-blue:#E8F4F8;--gray:#F2F2F2;--text:#333}
+        body{margin:0;font-family:"Microsoft Yahei",sans-serif;background:#f4f4f4;color:var(--text)}
+        .topbar{height:60px;background:white;display:flex;align-items:center;gap:12px;padding:0 20px;box-shadow:0 2px 5px rgba(0,0,0,0.05)}
+        .topbar .back{background:none;border:1px solid var(--gray);padding:8px 12px;border-radius:6px;cursor:pointer}
+        .container{max-width:1200px;margin:18px auto;padding:0 16px}
+        .player-wrap{display:flex;gap:20px}
+        .player{flex:0 1 720px;background:#fff;border-radius:8px;padding:12px;box-shadow:0 6px 20px rgba(0,0,0,0.06)}
+        .player .video-stage{width:100%;height:420px;background:var(--light-blue) center/cover no-repeat;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--main-blue);position:relative}
+        .player .video-stage::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(0,0,0,0.4),rgba(0,0,0,0.2));border-radius:6px}
+        .player h1{font-size:18px;margin:12px 0}
+        .player p{font-size:14px;color:#666}
+        .playlist{flex:0 1 320px;background:#fff;border-radius:8px;padding:12px;box-shadow:0 6px 20px rgba(0,0,0,0.04);height:100%}
+        .playlist h3{margin:0 0 8px 0;font-size:14px}
+        .playlist ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;max-height:440px;overflow:auto}
+        .playlist li{padding:10px;border-radius:6px;cursor:pointer;background:#fafafa;display:flex;gap:8px;align-items:flex-start}
+        .playlist li.active{background:linear-gradient(90deg,var(--light-blue),#fff);border-left:3px solid var(--main-blue);font-weight:600}
+        .playlist .num{width:26px;text-align:center;font-weight:700}
+        .playlist .meta{flex:1}
+        @media(max-width:900px){.player-wrap{flex-direction:column}.player{order:2}.playlist{order:1}}
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <button class="back" id="backBtn">← 返回</button>
+        <div style="font-weight:600;color:var(--main-blue)">视频播放</div>
+    </div>
+
+    <div class="container">
+        <div class="player-wrap">
+            <div class="player">
+                <video id="videoPlayer" class="video-stage" controls playsinline crossorigin></video>
+                <h1 id="vTitle">视频标题</h1>
+                <p id="vDesc">视频描述</p>
+                <div id="vStats" style="color:#999;font-size:13px;margin-top:6px">播放 · 点赞</div>
+            </div>
+            <aside class="playlist">
+                <h3>播放列表</h3>
+                <ul id="playlist">
+                </ul>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // 页面视频数据（与 index.html 保持一致），包含视频源 (示例) 和封面海报（可替换）
+        const videosData = [
+            { title: '【美食教程】超简单的番茄炒蛋做法', desc: '详细讲解番茄炒蛋的家常做法，新手也能学会！', play: '12.3万', like: '5680', duration: '30:45', src: 'vedio/mixkit-537-360.mp4', poster: 'photo/pexels-aymane-hanni-2148955127-30365876.jpg' },
+            { title: 'B站热门动画混剪：那些燃到爆的瞬间', desc: '盘点B站高燃动画片段，每一帧都是视觉盛宴！', play: '89.6万', like: '3.2万', duration: '29:49', src: 'vedio/mixkit-537-360.mp4', poster: 'photo/pexels-gabin-cobret-430175667-34097368.jpg' },
+            { title: '游戏攻略：原神须弥隐藏任务全解析', desc: '手把手教你完成须弥所有隐藏任务，拿满奖励！', play: '45.2万', like: '1.8万', duration: '34:44', src: 'vedio/mixkit-537-360.mp4', poster: 'photo/pexels-jean-paul-wettstein-677916508-34198331.jpg' },
+            { title: '治愈系音乐：适合学习工作的轻音乐合集', desc: '精选10首治愈系轻音乐，帮你放松身心、提升效率！', play: '67.8万', like: '2.5万', duration: '12:42', src: 'vedio/mixkit-537-360.mp4', poster: 'photo/pexels-majesticaljasmin-17392872.jpg' }
+        ];
+
+        function qs(name){
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
+        const startIndex = Math.max(0, parseInt(qs('index') || '0'));
+        const playlistEl = document.getElementById('playlist');
+        const vTitle = document.getElementById('vTitle');
+        const vDesc = document.getElementById('vDesc');
+        const vStats = document.getElementById('vStats');
+        const videoStage = document.getElementById('videoStage');
+
+        function renderPlaylist(active){
+            playlistEl.innerHTML = '';
+            videosData.forEach((v,i)=>{
+                const li = document.createElement('li');
+                li.className = i===active? 'active playlist-item':'playlist-item';
+                li.dataset.index = i;
+                li.innerHTML = `<div class="num">${i+1}</div><div class="meta"><div style="font-size:13px">${v.title}</div><div style="font-size:12px;color:#999;margin-top:6px">▶ ${v.play} · ${v.duration}</div></div>`;
+                li.addEventListener('click', ()=>{ setActive(i); });
+                playlistEl.appendChild(li);
+            });
+        }
+
+        function setActive(index){
+            const v = videosData[index];
+            vTitle.textContent = v.title;
+            vDesc.textContent = v.desc;
+            vStats.textContent = `播放量：${v.play} · 点赞数：${v.like}`;
+            document.querySelectorAll('.playlist-item').forEach(el=>el.classList.remove('active'));
+            const sel = document.querySelector('.playlist-item[data-index="'+index+'"]');
+            if(sel) sel.classList.add('active');
+
+            // 设置视频源并播放
+            const player = document.getElementById('videoPlayer');
+            if (v.src) {
+                // 如果当前 src 不同则替换
+                if (player.src !== v.src) {
+                    player.pause();
+                    player.src = v.src;
+                    if (v.poster) {
+                        player.poster = v.poster;
+                    }
+                    player.load();
+                }
+                // 尝试自动播放（浏览器可能阻止自动播放）
+                const playPromise = player.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        // 自动播放被阻止：不做处理，用户可以手动点击播放
+                    });
+                }
+            }
+            
+            // 设置背景图
+            const videoStage = document.getElementById('videoStage');
+            if (v.poster) {
+                videoStage.style.backgroundImage = `url('${v.poster}')`;
+            }
+        }
+
+        document.getElementById('backBtn').addEventListener('click', ()=>{ window.history.back(); });
+
+        // 初始化
+        renderPlaylist(startIndex);
+        setActive(startIndex);
+    </script>
+</body>
+</html>
